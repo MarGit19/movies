@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { FiArrowLeftCircle, FiArrowRightCircle } from 'react-icons/fi';
 import PlayVideo from './PlayVideo';
@@ -10,11 +10,11 @@ const HomeBanner = () => {
     const [playVideo, setPlayVideo] = useState(false);
     const [playVideoId, setPlayVideoId] = useState('');
 
-    const handleNext = () => {
+    const handleNext = useCallback(() => {
         if (currentImage < bannerData.length - 1) {
             setCurrentImage(prev => prev + 1);
         }
-    };
+    }, [currentImage, bannerData.length]);
 
     const handlePrev = () => {
         if (currentImage > 0) {
@@ -37,7 +37,7 @@ const HomeBanner = () => {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [bannerData, currentImage]);
+    }, [bannerData, currentImage, handleNext]);
 
     return (
         <section className='w-full h-full'>

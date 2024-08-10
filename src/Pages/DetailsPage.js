@@ -132,7 +132,7 @@ const DetailsPage = () => {
       </div>
 
       {playVideo && (
-        <PlayVideo videoId={data} close={() => setPlayVideo(false)} media_type={params?.explore} />
+        <PlayVideo data={playVideoId} close={() => setPlayVideo(false)} media_type={params?.explore} />
       )}
     </div>
   );
