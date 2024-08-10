@@ -8,36 +8,31 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setBannerData, setImageURL } from './Store/MovieSlice';
 
+const fetchTrendiingData = async(dispatch) => {
+  try {
+    const response = await axios.get('trending/all/week');
+    dispatch(setBannerData(response.data.results));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const fetchConfiguration = async(dispatch) => {
+  try {
+    const response = await axios.get('/configuration');
+    dispatch(setImageURL(response.data.images.secure_base_url + 'original'));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 function App() {
-
-  const dispatch = useDispatch()
-
-  const fetchTrendiingData = async() => {
-    try {
-      const response = await axios.get('trending/all/week')
-
-      dispatch(setBannerData(response.data.results))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchConfiguration = async() => {
-    try {
-      const response = await axios.get("/configuration")
-
-      dispatch(setImageURL(response.data.images.secure_base_url+"original"))
-    } catch (error) {
-
-    }
-  }
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchTrendiingData()
-    fetchConfiguration()
-  }, [])
-
-
+    fetchTrendiingData(dispatch);
+    fetchConfiguration(dispatch);
+  }, [dispatch]);
 
   return (
     <main className='pb-16 lg:pb-0'>
