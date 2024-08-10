@@ -42,7 +42,7 @@ const HomeBanner = () => {
     return (
         <section className='w-full h-full'>
             {playVideo && (
-                <PlayVideo videoId={playVideoId} close={() => setPlayVideo(false)} media_type='explore' />
+                <PlayVideo data={{ id: playVideoId }} close={() => setPlayVideo(false)} media_type='movie' />
             )}
             <div className='flex min-h-full max-h-[95vh] overflow-hidden'>
                 {bannerData.map((data, index) => (
