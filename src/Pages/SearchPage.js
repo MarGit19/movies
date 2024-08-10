@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Card from '../Components/Card';
 import axios from 'axios';
@@ -9,7 +9,7 @@ const SearchPage = () => {
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const query = new URLSearchParams(location.search).get('q');
 
     if (!query) {
@@ -21,33 +21,38 @@ const SearchPage = () => {
       const response = await axios.get('/search/multi', {
         params: {
           query,
-          page: page,
+          page,
         },
       });
       setData(response.data.results);
     } catch (error) {
+      console.log('error', error);
     }
-  };
+  }, [location.search, page]);
 
   useEffect(() => {
     setPage(1);
-    setData([])
+    setData([]);
     fetchData();
-  }, [location.search]);
-
-  const handleScroll = () => {
-    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      setPage(prev => prev + 1)
-    }
-  }
+  }, [location.search, fetchData]);
 
   useEffect(() => {
-    fetchData()
-  }, [page])
+    fetchData();
+  }, [page, fetchData]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-  }, [])
+    const handleScroll = () => {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        setPage(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className='py-20'>
