@@ -8,11 +8,11 @@ const HorizontalScrollCard = ({data = [], heading, trending, media_type}) => {
     const containerRef = useRef()
 
     const handleNext = () => {
-        containerRef.current.scrollLeft += 300
+        containerRef.current.scrollLeft -= 300
       };
     
     const handlePrev = () => {
-        containerRef.current.scrollRight -= 300
+        containerRef.current.scrollLeft += 300
       };
 
   return (
