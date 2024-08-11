@@ -57,7 +57,7 @@ const DetailsPage = () => {
             className='w-100 h-100 object-cover rounded'
             alt={data.title || 'Poster Image'}
           />
-          <button onClick={() => handlePlayVideo(data)} className='mt-3 w-full py-2 px-4 text-center bg-red-600 text-white rounded font-bold text-lg hover:bg-white hover:text-black hover:scale-105 transition-all'>Play Movie</button>
+          <button onClick={() => handlePlayVideo(data)} className='mt-3 w-full py-2 px-4 text-center bg-red-600 text-white rounded font-bold text-lg hover:bg-white hover:text-black hover:scale-105 transition-all'>Play</button>
         </div>
 
         <div>
